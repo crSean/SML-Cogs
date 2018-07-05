@@ -484,7 +484,8 @@ class RACF:
                 await ctx.invoke(self.dmusers, self.config.messages.visitor_rules, member)
             else:
                 await ctx.invoke(mm.changerole, member, perm['role'], 'Member', 'Tourney', 'Content', '-Visitor',
-                                 '-Recruit')
+                                 '-Recruit','-AlphaRecruit','-BravoRecruit','-CharlieRecruit','-DeltaRecruit',
+                                 '-EchoRecruit','-FoxtrotRecruit','-GolfRecruit','-HotelRecruit')
                 channel = discord.utils.get(
                     ctx.message.server.channels, name="family-chat")
                 await ctx.invoke(self.dmusers, self.config.messages.member, member)
@@ -922,7 +923,8 @@ class RACF:
         server = ctx.message.server
         roles_param = self.config.roles.member_default.copy()
         roles_param.extend(roles)
-        roles_param.extend(["-Visitor", "-Recruit"])
+        roles_param.extend(["-Visitor", "-Recruit", "-AlphaRecruit", "-BravoRecruit", "-CharlieRecruit", "-DeltaRecruit",
+                                 "-EchoRecruit", "-FoxtrotRecruit", "-GolfRecruit", "-HotelRecruit"])
         channel = discord.utils.get(
             ctx.message.server.channels, name="family-chat")
         # print(roles_param)
@@ -1553,9 +1555,27 @@ class RACF:
         if member is None:
             await self.bot.send_cmd_help()
             return
-        # remove role
+        # remove role(s)
         recruit_role = discord.utils.get(ctx.message.server.roles, name='Recruit')
+        alpha_recruit_role = discord.utils.get(ctx.message.server.roles, name='AlphaRecruit')
+        bravo_recruit_role = discord.utils.get(ctx.message.server.roles, name='BravoRecruit')
+        charlie_recruit_role = discord.utils.get(ctx.message.server.roles, name='CharlieRecruit')
+        delta_recruit_role = discord.utils.get(ctx.message.server.roles, name='DeltaRecruit')
+        echo_recruit_role = discord.utils.get(ctx.message.server.roles, name='EchoRecruit')
+        foxtrot_recruit_role = discord.utils.get(ctx.message.server.roles, name='FoxtrotRecruit')
+        golf_recruit_role = discord.utils.get(ctx.message.server.roles, name='GolfRecruit')
+        hotel_recruit_role = discord.utils.get(ctx.message.server.roles, name='HotelRecruit')
+       
         await self.bot.remove_roles(member, recruit_role)
+        await self.bot.remove_roles(member, alpha_recruit_role)
+        await self.bot.remove_roles(member, bravo_recruit_role)
+        await self.bot.remove_roles(member, charlie_recruit_role)
+        await self.bot.remove_roles(member, delta_recruit_role)
+        await self.bot.remove_roles(member, echo_recruit_role)
+        await self.bot.remove_roles(member, foxtrot_recruit_role)
+        await self.bot.remove_roles(member, golf_recruit_role)
+        await self.bot.remove_roles(member, hotel_recruit_role)
+        
         await self.bot.say("Removed Recruit from {}".format(member))
         # delete messages from recruit channel
         recruit_channel = discord.utils.get(ctx.message.server.channels, name='recruit')
